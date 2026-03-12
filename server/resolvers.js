@@ -1,4 +1,4 @@
-import { getJob, getJobs, getJobsByCompany } from "./db/jobs.js";
+import { createJob, getJob, getJobs, getJobsByCompany } from "./db/jobs.js";
 import { getCompanies, getCompany } from "./db/companies.js";
 import { GraphQLError } from "graphql";
 import { notFoundError } from "./utils/error.utils.js";
@@ -25,6 +25,19 @@ export const resolvers = {
       return company;
     },
     companies: () => getCompanies(),
+  },
+
+  Mutation: {
+    createJob: (_root, args) => {
+      console.log({ args });
+      const { input } = args;
+      const companyId = "FjcJCHJALA4i";
+      return createJob({
+        companyId,
+        title: input.title,
+        description: input.description,
+      });
+    },
   },
   Job: {
     title: (job) => job.title,

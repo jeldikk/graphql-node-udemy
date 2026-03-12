@@ -6,6 +6,10 @@ type Query{
     companies: [Company!]
 }
 
+type Mutation {
+    createJob(input: CreateJobInput!): Job
+}
+
 """
 This is documentation comment for __Job__ type. And this will be displayed on graphql playground
 """
@@ -27,4 +31,16 @@ type Company {
     name: String!
     description: String
     jobs: [Job!]
+}
+
+input CreateJobInput{
+    """
+    Title of the job, which is a mandatory field
+    """
+    title: String!
+    """
+    Description of the job
+    """
+    description: String
+
 }
