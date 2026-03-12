@@ -1,0 +1,30 @@
+type Query{
+    greeting: String
+    job(id: ID!): Job
+    jobs: [Job!]
+    company(id: ID!): Company!
+    companies: [Company!]
+}
+
+"""
+This is documentation comment for __Job__ type. And this will be displayed on graphql playground
+"""
+# these are regular comments
+type Job{
+    id: ID!
+    title: String!
+    """
+    This is documentation comment for __date__ property in ISO-8601 format (YYYY-MM-DD)
+    """
+    date: String!
+    timestamp: String!
+    description: String
+    company: Company!
+}
+
+type Company {
+    id: ID!
+    name: String!
+    description: String
+    jobs: [Job!]
+}
