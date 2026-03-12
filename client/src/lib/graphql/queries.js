@@ -1,6 +1,5 @@
-import { gql, GraphQLClient } from "graphql-request";
-
-const client = new GraphQLClient("http://localhost:9000/graphql");
+import { client } from "./client";
+import { gql } from "graphql-request";
 
 export function getJobs() {
   const document = gql`

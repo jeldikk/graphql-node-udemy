@@ -1,6 +1,12 @@
-import { createJob, getJob, getJobs, getJobsByCompany } from "./db/jobs.js";
+import {
+  createJob,
+  deleteJob,
+  getJob,
+  getJobs,
+  getJobsByCompany,
+  updateJob,
+} from "./db/jobs.js";
 import { getCompanies, getCompany } from "./db/companies.js";
-import { GraphQLError } from "graphql";
 import { notFoundError } from "./utils/error.utils.js";
 
 export const resolvers = {
@@ -37,6 +43,27 @@ export const resolvers = {
         title: input.title,
         description: input.description,
       });
+    },
+    deleteJob: async (_root, args) => {
+      try {
+        const job = await deleteJob(args.id);
+        return job;
+      } catch (err) {
+        throw notFoundError(err.message);
+      }
+    },
+    updateJob: async (_root, args) => {
+      const { input } = args;
+      try {
+        const updatedJob = await updateJob({
+          id: input.id,
+          title: input.title,
+          description: input.description,
+        });
+        return updatedJob;
+      } catch (err) {
+        throw notFoundError(err.message);
+      }
     },
   },
   Job: {
