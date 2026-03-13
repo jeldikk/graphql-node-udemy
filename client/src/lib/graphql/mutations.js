@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { apolloClient, client } from "./client";
+import { apolloClient } from "./client";
 
 export async function createJob({ title, description }) {
   const document = gql`
@@ -11,7 +11,6 @@ export async function createJob({ title, description }) {
       }
     }
   `;
-  //   return client.request(document, { input: { title, description } });
   const result = await apolloClient.mutate({
     mutation: document,
     variables: { input: { title, description } },

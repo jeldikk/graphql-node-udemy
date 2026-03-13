@@ -1,5 +1,4 @@
-import { apolloClient, client } from "./client";
-// import { gql } from "graphql-request";
+import { apolloClient } from "./client";
 import { gql } from "@apollo/client";
 
 export async function getJobs() {

@@ -8,11 +8,11 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 
-export const client = new GraphQLClient("http://localhost:9000/graphql", {
-  headers: {
-    Authorization: `Bearer ${getAccessToken()}`,
-  },
-});
+// export const client = new GraphQLClient("http://localhost:9000/graphql", {
+//   headers: {
+//     Authorization: `Bearer ${getAccessToken()}`,
+//   },
+// });
 
 const httpLink = new HttpLink({ uri: "http://localhost:9000/graphql" });
 
