@@ -10,12 +10,17 @@ function CreateJobPage() {
     event.preventDefault();
     console.log("should post a new job:", { title, description });
     setIsSubmitting(true);
-    createJob({ title, description }).then((res) => {
-      console.log("Job created successfully: ", { res });
-      setTitle("");
-      setDescription("");
-      setIsSubmitting(false);
-    });
+    createJob({ title, description })
+      .then((res) => {
+        console.log("Job created successfully: ", { res });
+        setTitle("");
+        setDescription("");
+        setIsSubmitting(false);
+      })
+      .catch((err) => {
+        console.error("Error creating job: ", err);
+        setIsSubmitting(false);
+      });
   };
 
   return (

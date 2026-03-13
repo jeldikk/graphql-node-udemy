@@ -6,6 +6,7 @@ import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@as-integrations/express4";
 import { readFile } from "node:fs/promises";
 import { resolvers } from "./resolvers.js";
+import { resolverContext } from "./utils/resolver.utils.js";
 
 const PORT = 9000;
 
@@ -25,7 +26,10 @@ const apolloServer = new ApolloServer({
 
 await apolloServer.start();
 
-app.use("/graphql", expressMiddleware(apolloServer));
+app.use(
+  "/graphql",
+  expressMiddleware(apolloServer, { context: resolverContext }),
+);
 
 app.listen({ port: PORT }, () => {
   console.log(`Server running on port ${PORT}`);

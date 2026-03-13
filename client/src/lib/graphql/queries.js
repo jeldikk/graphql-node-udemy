@@ -1,7 +1,8 @@
-import { client } from "./client";
-import { gql } from "graphql-request";
+import { apolloClient, client } from "./client";
+// import { gql } from "graphql-request";
+import { gql } from "@apollo/client";
 
-export function getJobs() {
+export async function getJobs() {
   const document = gql`
     query {
       jobs {
@@ -15,10 +16,13 @@ export function getJobs() {
       }
     }
   `;
-  return client.request(document);
+  //   return client.request(document);
+  const result = await apolloClient.query({ query: document });
+  //   console.log({ result });
+  return result.data;
 }
 
-export function getJobDetails(jobId) {
+export async function getJobDetails(jobId) {
   console.log({ jobId });
   const document = gql`
     query JobDetails($id: ID!) {
@@ -34,10 +38,16 @@ export function getJobDetails(jobId) {
       }
     }
   `;
-  return client.request(document, { id: jobId });
+  //   return client.request(document, { id: jobId });
+  const result = await apolloClient.query({
+    query: document,
+    variables: { id: jobId },
+  });
+  console.log({ result });
+  return result.data;
 }
 
-export function getCompanyDetails(companyId) {
+export async function getCompanyDetails(companyId) {
   const document = gql`
     query companyDetails($id: ID!) {
       company(id: $id) {
@@ -48,10 +58,15 @@ export function getCompanyDetails(companyId) {
     }
   `;
 
-  return client.request(document, { id: companyId });
+  //   return client.request(document, { id: companyId });
+  const result = await apolloClient.query({
+    query: document,
+    variables: { id: companyId },
+  });
+  return result.data;
 }
 
-export function getCompanyDetailsWithJobs(companyId) {
+export async function getCompanyDetailsWithJobs(companyId) {
   const document = gql`
     query comapnyDetailsWithJobs($id: ID!) {
       company(id: $id) {
@@ -67,5 +82,10 @@ export function getCompanyDetailsWithJobs(companyId) {
       }
     }
   `;
-  return client.request(document, { id: companyId });
+  //   return client.request(document, { id: companyId });
+  const result = await apolloClient.query({
+    query: document,
+    variables: { id: companyId },
+  });
+  return result.data;
 }

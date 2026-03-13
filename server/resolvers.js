@@ -8,6 +8,7 @@ import {
 } from "./db/jobs.js";
 import { getCompanies, getCompany } from "./db/companies.js";
 import { notFoundError } from "./utils/error.utils.js";
+import { GraphQLError } from "graphql";
 
 export const resolvers = {
   Query: {
@@ -34,9 +35,15 @@ export const resolvers = {
   },
 
   Mutation: {
-    createJob: (_root, args) => {
-      console.log({ args });
+    createJob: (_root, args, context) => {
+      console.log({ args, context });
       const { input } = args;
+      const { user } = context;
+      if (!user) {
+        throw new GraphQLError("Unauthorized", {
+          extensions: { code: "UNAUTHORIZED" },
+        });
+      }
       const companyId = "FjcJCHJALA4i";
       return createJob({
         companyId,
