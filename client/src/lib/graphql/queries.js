@@ -16,7 +16,10 @@ export async function getJobs() {
     }
   `;
   //   return client.request(document);
-  const result = await apolloClient.query({ query: document });
+  const result = await apolloClient.query({
+    query: document,
+    fetchPolicy: "network-only",
+  });
   //   console.log({ result });
   return result.data;
 }
